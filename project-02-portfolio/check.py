@@ -138,7 +138,7 @@ if os.path.exists(CHROME):
     _shot = os.path.abspath(os.path.join(D, "shot.png"))
     r=subprocess.run([CHROME,"--headless","--disable-gpu",_USER_DATA_DIR,"--enable-logging=stderr","--v=1",
         f"--screenshot={_shot}","--window-size=1200,900","--hide-scrollbars",
-        file_uri(f"{D}/index.html")],capture_output=True,text=True,timeout=60)
+        file_uri(f"{D}/index.html")],capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
     console_err=[l for l in r.stderr.splitlines() if ':CONSOLE:' in l]
     shot_ok=os.path.exists(_shot)
 
@@ -180,7 +180,7 @@ if os.path.exists(CHROME):
     r = subprocess.run([CHROME,"--headless","--disable-gpu","--allow-file-access-from-files",
         _USER_DATA_DIR,"--hide-scrollbars",
         "--window-size=520,1500","--virtual-time-budget=3000","--dump-dom",
-        file_uri(frame)], capture_output=True, text=True, timeout=60)
+        file_uri(frame)], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60)
     t = re.search(r'<title>W=(\d+) S=(\d+) O=(\S+)</title>', r.stdout)
     overflow_ok = bool(t) and t.group(1)=='390' and t.group(2)=='390' and t.group(3)=='NONE'
     probe_detail = t.group(0) if t else "probe failed"
@@ -211,7 +211,7 @@ if os.path.exists(CHROME):
     _r = subprocess.run([CHROME,"--headless","--disable-gpu",_USER_DATA_DIR,"--hide-scrollbars",
         "--window-size=1280,1400",
         "--virtual-time-budget=2500","--dump-dom", file_uri(mp)],
-        capture_output=True, text=True, timeout=60)
+        capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60)
     _m = re.search(r'<title>CPL=(\d+)-(\d+)</title>', _r.stdout)
     if _m:
         lo, hi = int(_m.group(1)), int(_m.group(2))

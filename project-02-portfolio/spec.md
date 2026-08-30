@@ -58,6 +58,12 @@ exactly. What's adapted is the framing around them, documented below.
   site/shot.png: The system cannot find the path specified` — even though that exact string
   is a perfectly valid relative path from Python's point of view. `os.path.abspath()` first
   sidesteps whatever Chrome's own path handling is doing differently there.
+- **The three headless-Chrome `subprocess.run(..., text=True)` calls now pin `encoding="utf-8"`.**
+  Without it, Python decodes the subprocess's captured stdout/stderr with the system codepage
+  too (cp1252 here) — the same class of bug as the file-read fix above, just on process output
+  instead of file contents. It stayed invisible while testing only against this repo's own
+  rebuilt page, and only surfaced once a richer real-world page (an emoji in a DOM dump) was
+  checked, which is exactly the kind of content `check.py` has to survive.
 - **`.gitignore` no longer excludes `site/profile.md`.** The upstream file assumes this
   folder is a clone of the shared course template, where a student's personal facts
   shouldn't get committed back upstream. This repo *is* the personal deliverable — `profile.md`,
