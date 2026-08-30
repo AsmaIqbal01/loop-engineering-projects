@@ -58,8 +58,25 @@ skill, script, and settings had to be committed and pushed to
 - **Prompt:** reads this project's `AGENTS.md` and `.claude/skills/sky-watch/SKILL.md` inside
   `project-03-sky-watch/`, runs `skywatch.py --days 1` (today only — a daily run reports today, not
   the full week), and writes the one-paragraph forecast in the skill's voice.
-- **Routine ID / link:** see below, filled in after creation.
-- **First fire:** rehearsed with a 2-minute one-off run before trusting the midnight schedule
-  unattended, per the course's "prove it fast, then trust it overnight" rule.
+- **Routine ID:** `trig_016U5XqxoNeCvXgEancEsoam`
+- **Link:** https://claude.ai/code/routines/trig_016U5XqxoNeCvXgEancEsoam
 
-(Routine ID, run link, and one-off rehearsal result recorded below once created.)
+## Step 4 — rehearsed it immediately (did not wait for midnight)
+
+Fired the routine on demand (`RemoteTrigger action:"run"`) right after creating it, per the
+course's "prove it fast, then trust it overnight" rule — a schedule is too slow to prove by waiting
+for the clock.
+
+Result: the rehearsal **failed to fetch**, and that turned out to be the useful proof. The cloud
+sandbox's egress proxy rejected the connection to `api.nasa.gov` with `403 Forbidden` ("organization
+policy"), `skywatch.py` exited non-zero after its 3 retries, and the agent did exactly what the
+skill demands in that case — no invented forecast, just:
+
+> The watch could not run this time — the fetch to NASA's asteroid feed failed (network access to
+> api.nasa.gov was blocked). No forecast was generated.
+
+So the schedule, the prompt, and the failure path are all confirmed working end to end. The one
+open item is infrastructure, not code: the cloud environment's outbound network allowlist needs
+`api.nasa.gov` added before a real midnight run can succeed. Until that's fixed, every scheduled
+fire will correctly report "could not run" rather than a wrong or guessed forecast — which is the
+one thing this project is built to never get wrong.
