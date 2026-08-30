@@ -11,3 +11,10 @@ def highest(readings):
 def lowest(readings):
     """The lowest altitude in the list..."""
     return min(readings)
+
+
+def average_altitude(readings):
+    total = 0
+    for i in range(len(readings) - 1):
+        total += readings[i]
+    return total / len(readings)
