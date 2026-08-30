@@ -22,7 +22,7 @@ checkout — so `.github/workflows/doorbell.yml` and `project-04-doorbell/` had 
 pushed to `github.com/AsmaIqbal01/loop-engineering-projects` before any pull request could trigger
 it.
 
-## Step 3 — the secret (still pending — user action required)
+## Step 3 — the secret
 
 The doorbell needs one repo secret before it can call Claude from GitHub's rented machine:
 
@@ -42,13 +42,27 @@ Settings → Secrets and variables → Actions → New repository secret**, name
 `CLAUDE_CODE_OAUTH_TOKEN` (must match exactly — that's what `doorbell.yml` looks for), value = the
 token from `claude setup-token`.
 
-This step needs the user's own Claude Pro/Max login and repo admin access, so it was left for the
-user to run rather than done from this session.
+This step needs the user's own Claude Pro/Max login and repo admin access, so `claude setup-token`
+was run by the user directly (via `!`, so it had real browser access), and the secret was confirmed
+present on the repo (`gh secret list` showed `CLAUDE_CODE_OAUTH_TOKEN`, set 2026-08-30T07:21:49Z).
 
-## Step 4 — first ring (not yet run)
+## Step 4 — first ring (confirmed working, 2026-08-30)
 
-Plan: open `project-04-doorbell/readings.py` on GitHub, paste in the off-by-one
-`average_altitude()` bug from the README, and open it as a pull request via "Create a new branch
-for this commit and start a pull request." Expect a review comment within a minute or two naming
-the off-by-one bug, *if* `track_progress: true` held and the secret is valid. Will log the actual
-result here once the user opens that PR.
+Created branch `doorbell-test`, added the exact off-by-one `average_altitude()` from the README to
+`project-04-doorbell/readings.py`, pushed, and opened
+[PR #1](https://github.com/AsmaIqbal01/loop-engineering-projects/pull/1) against `main`.
+
+The `Doorbell` workflow fired automatically on `pull_request: opened` (run
+`33299085531`), finished in 21 seconds, and posted a real comment — not just a green
+checkmark — correctly identifying the bug:
+
+> **Bug:** `average_altitude()` in `project-04-doorbell/readings.py:18` uses
+> `range(len(readings) - 1)`, which iterates only over indices `0` to `len(readings) - 2`,
+> skipping the last element of the list. This is an off-by-one error — the loop should use
+> `range(len(readings))`. As written, `average_altitude(READINGS)` sums only the first 4 of 5
+> readings but still divides by `len(readings)` (5), producing an incorrect average.
+
+Confirmed end to end: `on: pull_request` fired, `track_progress: true` made the review actually
+post (not just a silent success), and the workflow read the PR's own commit hash (`63d697a`) out of
+the diff to cite it — exactly the "the model forgot, the repo did not" behavior the README predicts,
+even on this very first ring.
