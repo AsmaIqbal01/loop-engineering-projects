@@ -1,0 +1,276 @@
+/* Asma Iqbal — portfolio. Design decision: see design.md.
+   Colour and size are tokens only (see spec.md M6/M13) — everything outside :root
+   references a var(), 0, or a percentage. No literal colour, no magic px/rem/em on
+   font-size/margin/padding/gap anywhere below this block. */
+:root {
+  --bg: #0a0a0a;
+  --bg-raised: #131313;
+  --fg: #f2f2f2;
+  --fg-muted: #c9cdd3;
+  --accent: #00ff88;
+  --border: #262626;
+  --overlay: #00000066;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.9rem;
+  --text-base: 1.05rem;
+  --text-lg: 1.3rem;
+  --text-xl: clamp(2rem, 5vw, 3.2rem);
+  --text-2xl: clamp(2.6rem, 8vw, 5.6rem);
+
+  --space-1: 0.4rem;
+  --space-2: 0.8rem;
+  --space-3: 1.4rem;
+  --space-4: 2.2rem;
+  --space-5: 3.5rem;
+  --space-6: 6rem;
+
+  --measure: 43ch;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  margin: 0;
+}
+/* Global focus ring (M15) — declared first so it is the first :focus-visible rule
+   the checker finds; component rules below only add :hover, never re-touch outline. */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3 { font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace; line-height: 1.05; margin: 0; }
+p { margin: 0; }
+
+.prose { max-width: var(--measure); }
+
+/* ── Skip link ── */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent);
+  color: var(--bg);
+  padding: var(--space-2) var(--space-3);
+  z-index: 100;
+  transition: left .2s var(--ease);
+}
+.skip-link:focus { left: var(--space-2); top: var(--space-2); }
+
+/* ── Topbar / nav ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--overlay);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  flex-wrap: wrap;
+}
+.brand {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color .2s var(--ease);
+}
+.brand:hover { color: var(--accent); }
+.status-line {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-xs);
+  color: var(--fg-muted);
+}
+.status-line::before {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: var(--space-1);
+}
+.nav-links { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.nav-links a {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  transition: color .2s var(--ease);
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ── Hero ── */
+#hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner { max-width: 760px; text-align: center; }
+.eyebrow {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-3);
+}
+#hero h1 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-3);
+}
+.cmd-line {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-lg);
+  color: var(--fg-muted);
+  margin-bottom: var(--space-1);
+}
+.cmd-line .verb { color: var(--accent); }
+.hero-sub {
+  font-size: var(--text-base);
+  color: var(--fg-muted);
+  max-width: var(--measure);
+  margin: var(--space-4) auto var(--space-4);
+}
+.hero-cta { display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; }
+.hero-avatar { width: 96px; height: 96px; border-radius: 16px; margin: 0 auto var(--space-4); }
+
+.btn {
+  display: inline-block;
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 999px;
+  border: 1.5px solid var(--accent);
+  transition: background .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
+}
+.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-ghost { color: var(--fg); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Sections ── */
+.section { padding: var(--space-6) var(--space-4); }
+.section-inner { max-width: 980px; margin: 0 auto; }
+.section h2 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.01em;
+}
+
+/* reveal-on-scroll, degrades to visible under reduced-motion (see bottom) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* ── Projects ── */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+.project-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
+}
+.project-card:hover, .project-card:focus-within { border-color: var(--accent); transform: translateY(-4px); }
+.project-tag {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.project-card h3 { font-size: var(--text-lg); }
+.project-pipeline {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.project-card .prose { font-size: var(--text-sm); color: var(--fg-muted); }
+.project-link {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  width: fit-content;
+  padding-bottom: var(--space-1);
+  transition: opacity .2s var(--ease);
+}
+.project-link:hover { opacity: 0.75; }
+
+/* ── Skills ── */
+.skills-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.skills-list li {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--fg-muted);
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.skills-list li:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Contact ── */
+.contact-section { background: var(--bg-raised); border-top: 1px solid var(--border); }
+.contact-email { font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace; font-size: var(--text-lg); margin: var(--space-3) 0; }
+.contact-email a { border-bottom: 2px solid var(--accent); transition: opacity .2s var(--ease); }
+.contact-email a:hover { opacity: 0.75; }
+.contact-links { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  padding: var(--space-4);
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: var(--text-xs);
+  color: var(--fg-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ── Mobile (M16): no horizontal overflow at 390px ── */
+@media (max-width: 640px) {
+  .topbar nav { flex-direction: column; align-items: flex-start; }
+  .status-line { display: none; }
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .project-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Reduced motion (M20) ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}

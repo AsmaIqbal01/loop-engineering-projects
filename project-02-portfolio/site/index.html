@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asma Iqbal — AI Systems Architect</title>
+<meta name="description" content="Asma Iqbal is an AI Systems Architect and solo founder based in Karachi, Pakistan, building production-grade AI pipelines like DealClaw.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <nav aria-label="Primary">
+    <a href="#hero" class="brand">Asma Iqbal</a>
+    <span class="status-line">status: online</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section id="hero">
+    <div class="hero-inner reveal">
+      <img class="hero-avatar" src="avatar.svg" alt="Monogram mark, the letters A I, for Asma Iqbal">
+      <p class="eyebrow">asmaiqbal.dev — status: online</p>
+      <h1>Asma Iqbal</h1>
+      <p class="cmd-line">$ <span class="verb">write</span> specs before code</p>
+      <p class="cmd-line">$ <span class="verb">ship</span> things that run in production</p>
+      <p class="hero-sub">AI Systems Architect &amp; solo founder, based in Karachi, Pakistan.
+        Building multi-agent pipelines and production-grade AI SaaS — not demos.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">See what's shipped</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="section-inner reveal">
+      <h2>About</h2>
+      <p class="prose">I write specs before code, and I ship things that run in production
+        — not demos. I work solo, end to end: multi-agent pipelines, context engineering,
+        and production-grade AI SaaS, from the first spec to a live deployment someone
+        actually depends on. My flagship product, DealClaw, was recognized at Web Summit
+        ALPHA Lisbon 2026 — a Gmail-to-Discord pipeline I built and still ship solo,
+        tests and all.</p>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="section-inner reveal">
+      <h2>Projects</h2>
+      <div class="project-grid">
+
+        <article class="project-card">
+          <p class="project-tag">STATUS: LIVE · WEB SUMMIT ALPHA 2026</p>
+          <h3>DealClaw</h3>
+          <p class="project-pipeline">Gmail → Gemini → HubSpot → Discord</p>
+          <p class="prose">DealClaw turns inbound Gmail leads into qualified deals
+            automatically, end to end — no manual triage. It's been running in production
+            since July 2026, with 489 tests passing, and it's what earned recognition at
+            Web Summit ALPHA Lisbon 2026. I built and ship it solo.</p>
+          <a class="project-link" href="https://github.com/AsmaIqbal01/openclaw-deal-scout">View source ↗</a>
+        </article>
+
+        <article class="project-card">
+          <p class="project-tag">STATUS: LIVE · 106/106 TESTS</p>
+          <h3>Real Estate CRM AI Solution</h3>
+          <p class="project-pipeline">Gmail → Gemini 2.5 Flash → HubSpot → Discord</p>
+          <p class="prose">The same DealClaw architecture, adapted for a harder domain:
+            qualifying real-estate leads the moment they land in an agent's inbox. 106 out
+            of 106 tests pass. I built and ship it solo, same as DealClaw.</p>
+          <a class="project-link" href="https://github.com/AsmaIqbal01/openclaw-deal-scout-realestate">View source ↗</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <div class="section-inner reveal">
+      <h2>Skills</h2>
+      <ul class="skills-list">
+        <li>Python</li>
+        <li>Node.js</li>
+        <li>Claude AI</li>
+        <li>Gemini</li>
+        <li>Vercel</li>
+        <li>HubSpot</li>
+        <li>Agentic systems</li>
+        <li>Gmail API integrations</li>
+        <li>Discord automation</li>
+        <li>Context engineering</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact-section">
+    <div class="section-inner reveal">
+      <h2>Let's build something real.</h2>
+      <p class="prose">Have a pipeline that needs to ship? I read specs, not just write them.</p>
+      <p class="contact-email"><a href="mailto:azeecreations1@gmail.com">azeecreations1@gmail.com</a></p>
+      <div class="contact-links">
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/asma-iqbal000/">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/AsmaIqbal01">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Asma Iqbal</p>
+</footer>
+
+<script>
+  (function () {
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); ro.unobserve(entry.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    Array.prototype.slice.call(document.querySelectorAll('.reveal')).forEach(function (node) {
+      ro.observe(node);
+    });
+  })();
+</script>
+</body>
+</html>
